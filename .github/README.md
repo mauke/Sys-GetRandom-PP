@@ -1,6 +1,6 @@
 # NAME
 
-Sys::GetRandom::PP - Perl interface to getrandom(2)
+Sys::GetRandom::PP - pure Perl interface to getrandom(2)
 
 # SYNOPSIS
 

@@ -67,7 +67,7 @@ __END__
 
 =head1 NAME
 
-Sys::GetRandom::PP - Perl interface to getrandom(2)
+Sys::GetRandom::PP - pure Perl interface to getrandom(2)
 
 =head1 SYNOPSIS
 
