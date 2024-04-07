@@ -1,0 +1,26 @@
+name: "run tests"
+on:
+  [push, pull_request, workflow_dispatch]
+
+jobs:
+  perl_tester:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - "ubuntu-latest"
+        perl-version: <?php echo perl-versions; ?>
+
+    runs-on: ${{ matrix.os }}
+    name: "perl v${{ matrix.perl-version }} on ${{ matrix.os }}"
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Set up perl"
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl-version }}
+      - run: cpanm ExtUtils::MakeMaker
+      - run: perl Makefile.PL
+      - run: cpanm --installdeps --with-develop --notest .
+      - run: make test
