@@ -2,15 +2,7 @@
 use strict;
 use warnings;
 
-{
-    package Sys_Macro;
-    local $^W = 0;
-    require 'syscall.ph';
-    SYS_getrandom();
-    require 'sys/random.ph';
-    GRND_RANDOM();
-    GRND_NONBLOCK();
-}
+my $gen = 'PP.pm.PL';
 
 return {
     NAME   => 'Sys::GetRandom::PP',
@@ -27,6 +19,19 @@ return {
         'strict'   => 0,
         'warnings' => 0,
     },
+
+    PM => {
+        'PP.pm' => '$(INST_ARCHLIB)/Sys/GetRandom/PP.pm',
+    },
+    clean => {
+        FILES => 'PP.pm',
+    },
+    PL_FILES => {
+        $gen => 'PP.pm',
+    },
+
+    ABSTRACT_FROM => $gen,
+    VERSION_FROM  => $gen,
 
     REPOSITORY => [ github => 'mauke' ],
 };

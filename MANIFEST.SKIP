@@ -8,3 +8,4 @@
 ^blib/
 ^maint/
 ^pm_to_blib\z
+^PP\.pm\z
