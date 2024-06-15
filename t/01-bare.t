@@ -1,6 +1,5 @@
 use strict;
-use warnings;
-use warnings FATAL => 'uninitialized';
+use warnings 'all', FATAL => 'uninitialized';
 
 use Test2::V0;
 
