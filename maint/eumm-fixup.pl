@@ -153,13 +153,13 @@ __EOT__
 
 pure_all :: .github/README.md
 
-.github/README.md : $(firstword $(wildcard blib/arch/$(subst ::,/,$(NAME)).pm) $(wildcard blib/lib/$(subst ::,/,$(NAME)).pm)) maint/pod2markdown.pl
+.github/README.md : lib/$(subst ::,/,$(NAME)).pm maint/pod2markdown.pl
 	mkdir -p .github
 	$(PERLRUN) maint/pod2markdown.pl < '$<' > '$@.~tmp~' && $(MV) -- '$@.~tmp~' '$@'
 
 distdir : $(DISTVNAME)/README
 
-$(DISTVNAME)/README : $(firstword $(wildcard blib/arch/$(subst ::,/,$(NAME)).pm) $(wildcard blib/lib/$(subst ::,/,$(NAME)).pm)) create_distdir
+$(DISTVNAME)/README : lib/$(subst ::,/,$(NAME)).pm create_distdir
 	$(TEST_F) '$@' || ( $(PERLRUN) maint/pod2readme.pl < '$<' > '$@.~tmp~' && $(MV) -- '$@.~tmp~' '$@' && cd '$(DISTVNAME)' && $(PERLRUN) -MExtUtils::Manifest=maniadd -e 'maniadd { "README" => "generated from $(NAME) POD (added by maint/eumm-fixup.pl)" }' )
 
 __EOT__
@@ -173,7 +173,7 @@ pure_all :: .github/workflows/run-tests.yml
 __EOT__
 
     $opt->{postamble}{text} .= $readme . $github_tests
-        unless $^O eq 'MSWin32' || defined $ENV{GITHUB_ACTIONS};
+        unless $^O eq 'MSWin32';
     for ($opt->{DEVELOP_REQUIRES}{'Pod::Markdown'}) {
         $_ = '3.005' if !$_ || $_ < '3.005';
     }

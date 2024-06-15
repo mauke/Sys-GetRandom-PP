@@ -1,52 +1,17 @@
-use strict;
-use warnings;
-
-my $version = '0.01';
-
-my $target = $ARGV[0] or die "Usage: $0 OUTFILE\n";
-
-{
-    package #
-        Sys_Macro;
-    require 'syscall.ph';
-    require 'sys/random.ph';
-}
-
-my %vars = (
-    gen           => "$0 v$version",
-    GRND_RANDOM   => scalar Sys_Macro::GRND_RANDOM(),
-    GRND_NONBLOCK => scalar Sys_Macro::GRND_NONBLOCK(),
-    SYS_getrandom => scalar Sys_Macro::SYS_getrandom(),
-);
-
-my $out_tmp = "$target._tmp";
-open my $out_fh, '>', $out_tmp or die "$0: $out_tmp: $!\n";
-
-while (my $line = readline DATA) {
-    $line =~ s{%\[\[(\w+)\]\]}{
-        defined $vars{$1}
-            ? $vars{$1}
-            : die "Unknown template variable: '$1'"
-    }eg;
-    print $out_fh $line
-        or die "Can't write to $out_tmp: $!";
-}
-
-close $out_fh
-    or die "Can't write to $out_tmp: $!";
-
-rename $out_tmp, $target
-    or die "Can't rename $out_tmp to $target: $!";
-
-__DATA__
-# This file was generated automatically by %[[gen]].
-#
 package Sys::GetRandom::PP;
 use strict;
 use warnings;
 
 use Exporter qw(import);
 use Carp qw(croak);
+use Sys::GetRandom::PP::_Bits ();
+BEGIN {
+    my $pkg = do { no strict 'refs'; \%{ __PACKAGE__ . '::' } };
+    my $bits = \%Sys::GetRandom::PP::_Bits::;
+    for my $sym (qw(GRND_RANDOM GRND_NONBLOCK _SYS_getrandom)) {
+        $pkg->{$sym} = $bits->{$sym};
+    }
+}
 
 our $VERSION = '0.01';
 
@@ -56,12 +21,6 @@ our @EXPORT_OK = qw(
     getrandom
     random_bytes
 );
-
-use constant {
-    GRND_RANDOM    => %[[GRND_RANDOM]],
-    GRND_NONBLOCK  => %[[GRND_NONBLOCK]],
-    _SYS_getrandom => %[[SYS_getrandom]],
-};
 
 sub getrandom ($$;$) {
     if (@_ < 2 || @_ > 3) {
@@ -118,7 +77,8 @@ This module provides a Perl interface to the L<getrandom(2)> call present on
 Linux and FreeBSD. It exports (on request) two functions and two constants.
 
 It is written in pure Perl using the L<syscall|perlfunc/syscall NUMBER, LIST>
-interface.
+interface. Otherwise it presents the same interface as L<Sys::GetRandom>, which
+is written in C.
 
 =head2 Functions
 
@@ -174,6 +134,7 @@ This is just a wrapper around C<getrandom> with default flags.
 
 =head1 SEE ALSO
 
+L<Sys::GetRandom>,
 L<getrandom(2)>,
 L<h2ph>
 

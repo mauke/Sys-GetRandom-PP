@@ -16,7 +16,8 @@ This module provides a Perl interface to the [getrandom(2)](http://man.he.net/ma
 Linux and FreeBSD. It exports (on request) two functions and two constants.
 
 It is written in pure Perl using the [syscall](https://perldoc.perl.org/perlfunc#syscall-NUMBER-LIST)
-interface.
+interface. Otherwise it presents the same interface as [Sys::GetRandom](https://metacpan.org/pod/Sys%3A%3AGetRandom), which
+is written in C.
 
 ## Functions
 
@@ -63,6 +64,7 @@ interface.
 
 # SEE ALSO
 
+[Sys::GetRandom](https://metacpan.org/pod/Sys%3A%3AGetRandom),
 [getrandom(2)](http://man.he.net/man2/getrandom),
 [h2ph](https://metacpan.org/pod/h2ph)
 

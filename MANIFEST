@@ -1,8 +1,10 @@
+Changes
+_Bits.pm.PL
+lib/Sys/GetRandom/PP.pm
 Makefile.PL
 Makefile_PL_settings.plx
 Makefile_PL_settings_maint.plx
 MANIFEST			This list of files
 MANIFEST.SKIP
-PP.pm.PL
 t/01-bare.t
 xt/pod.t

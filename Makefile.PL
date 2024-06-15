@@ -36,7 +36,7 @@ sub find_tests_recursively_in {
         keys %seen
 }
 
-$::MAINT_MODE = !-f 'META.yml' && !defined $ENV{GITHUB_ACTIONS};
+$::MAINT_MODE = !-f 'META.yml';
 my $settings_file = 'Makefile_PL_settings.plx';
 my %settings = %{do "./$settings_file" or die "Internal error: can't do $settings_file: ", $@ || $!};
 

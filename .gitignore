@@ -12,4 +12,4 @@
 .*.sw?
 *.[oi]
 *.bs
-/PP.pm
+/_Bits.pm
