@@ -77,7 +77,7 @@ This module provides a Perl interface to the L<getrandom(2)> call present on
 Linux and FreeBSD. It exports (on request) two functions and two constants.
 
 It is written in pure Perl using the L<syscall|perlfunc/syscall NUMBER, LIST>
-interface. Otherwise it presents the same interface as L<Sys::GetRandom>, which
+function. Otherwise it presents the same interface as L<Sys::GetRandom>, which
 is written in C.
 
 =head2 Functions
