@@ -24,7 +24,7 @@ is written in C.
 - getrandom SCALAR, LENGTH
 - getrandom SCALAR, LENGTH, FLAGS
 
-    Generates up to _LENGTH_ bytes of random data and stores them in _SCALAR_.
+    Generates up to *LENGTH* bytes of random data and stores them in *SCALAR*.
     Returns the number of random bytes generated, or `undef` on error (in which
     case `$!` is also set).
 
@@ -33,14 +33,14 @@ is written in C.
     If `/dev/urandom` has not been initialized yet, `getrandom` will block by
     default.
 
-    If `/dev/urandom` has been initialized and _LENGTH_ is 256 or less,
+    If `/dev/urandom` has been initialized and *LENGTH* is 256 or less,
     `getrandom` will atomically return the requested amount of random data (i.e.
-    it will generate exactly _LENGTH_ bytes of data and will not be interrupted by
-    a signal). For larger values of _LENGTH_ it may be interrupted by signals and
+    it will generate exactly *LENGTH* bytes of data and will not be interrupted by
+    a signal). For larger values of *LENGTH* it may be interrupted by signals and
     either generate fewer random bytes than requested or fail with `$!` set to
     `EINTR`.
 
-    The _FLAGS_ argument must be either 0 (the default value) or the bitwise OR of
+    The *FLAGS* argument must be either 0 (the default value) or the bitwise OR of
     one or more of the following flags:
 
     - `GRND_RANDOM`
@@ -56,9 +56,9 @@ is written in C.
 
 - random\_bytes LENGTH
 
-    Generates and returns a string of _LENGTH_ random bytes.
+    Generates and returns a string of *LENGTH* random bytes.
 
-    _LENGTH_ must be between 0 and 256 (inclusive).
+    *LENGTH* must be between 0 and 256 (inclusive).
 
     This is just a wrapper around `getrandom` with default flags.
 

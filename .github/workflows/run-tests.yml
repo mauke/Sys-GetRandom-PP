@@ -27,7 +27,6 @@ jobs:
         uses: shogo82148/actions-setup-perl@v1
         with:
           perl-version: ${{ matrix.perl-version }}
-      - run: cd /usr/include && { h2ph -eal syscall.h sys/random.h || true; }
       - run: perl Makefile.PL
       - run: cpanm --installdeps --with-develop --notest .
       - run: make test
