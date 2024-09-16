@@ -1,20 +1,33 @@
 use strict;
 use warnings;
 use File::Temp qw(tempdir);
+use Config qw(%Config);
 
-my $version = '0.02';
+my $version = '0.03';
 
 my $target = $ARGV[0] or die "Usage: $0 OUTFILE\n";
 
 my $phdir = tempdir(CLEANUP => 1);
 
-system "cd /usr/include && h2ph -eal -d \Q$phdir\E syscall.h sys/random.h";
+{
+    my $h2ph = 'h2ph';
+    for my $key (qw(installscript scriptdirexp)) {
+        my $candidate = "$Config{$key}/h2ph";
+        if (-x $candidate) {
+            $h2ph = $candidate;
+            last;
+        }
+    }
+    my $cmd = "cd /usr/include && \Q$h2ph\E -eal -d \Q$phdir\E sys/syscall.h sys/random.h";
+    print $cmd, "\n";
+    system $cmd;
+}
 unshift @INC, $phdir;
 
 {
     package #
         Sys_Macro;
-    require 'syscall.ph';
+    require 'sys/syscall.ph';
     require 'sys/random.ph';
 }
 
