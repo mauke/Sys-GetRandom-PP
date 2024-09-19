@@ -3,7 +3,7 @@ use warnings;
 use File::Temp qw(tempdir);
 use Config qw(%Config);
 
-my $version = '0.04';
+my $version = '0.05';
 
 my $target = $ARGV[0] or die "Usage: $0 OUTFILE\n";
 
@@ -40,6 +40,10 @@ unshift @INC, $phdir;
         unless (defined &__BYTE_ORDER__) {
             my $byte_order = $::Config{byteorder} =~ /^1/ ? __ORDER_LITTLE_ENDIAN__() : __ORDER_BIG_ENDIAN__();
             *__BYTE_ORDER__ = sub () { $byte_order };
+        }
+        unless (defined &__SIZEOF_POINTER__) {
+            my $sizeof_pointer = $::Config{ptrsize};
+            *__SIZEOF_POINTER__ = sub () { $sizeof_pointer };
         }
     }
     require 'sys/syscall.ph';
