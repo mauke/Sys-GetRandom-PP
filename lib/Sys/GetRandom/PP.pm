@@ -13,7 +13,8 @@ BEGIN {
     }
 }
 
-our $VERSION = '0.04';
+our $VERSION = '0.04_001';
+$VERSION =~ tr/_//d;
 
 our @EXPORT_OK = qw(
     GRND_RANDOM
