@@ -13,7 +13,7 @@ BEGIN {
     }
 }
 
-our $VERSION = '0.04_001';
+our $VERSION = '0.04_002';
 $VERSION =~ tr/_//d;
 
 our @EXPORT_OK = qw(
