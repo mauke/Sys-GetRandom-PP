@@ -83,8 +83,7 @@ package Sys::GetRandom::PP::_Bits;
 use strict;
 use warnings;
 
-our $VERSION = '0.04_002';
-$VERSION =~ tr/_//d;
+our $VERSION = '0.05';
 
 use constant {
     GRND_RANDOM    => %[[GRND_RANDOM]],
